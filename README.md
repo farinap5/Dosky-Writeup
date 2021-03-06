@@ -170,7 +170,7 @@ SSH-Honeypot  user.txt
 hanny@dosky:~$
 ```
 
-<h3 align="center">Privilege Escaletion</h3>
+<h3 align="center">Privilege Escalation</h3>
 
 <p>To elevate our privilege on the machine there are some things we can do such as using LinPeas or tools like this. </p>
 <p>But by running the command <b>sudo -l</b> we realize that we have the possibility to run the <b>SQLIte3</b> as a super user.</p>
