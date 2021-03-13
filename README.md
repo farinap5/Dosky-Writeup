@@ -43,15 +43,15 @@ PORT         STATE SERVICE VERSION
 </ur>
 
 ### Apache2
-<p>We have an apache server running, however this does not seem to be anything interesting as it is just a default service page showing.</p>
+<p>We have an apache server running, however it does not seem to be anything interesting as it is just a default service page showing.</p>
 <p>Even viewing the code, nothing catches my attention, just a few modified texts and in different languages.</p>
 
 ### Dosky's Web Page
-<p>Entering the service that runs on port 5000 we find a website about a software called dosky.</p>
-<p>A normal website about the service, and reading a little about it I find out what Dosky is: Dosky is a software that is based on server and client side in two separate programs, so you can manage the services that run on your server remotely and in a secure way..</p>
+<p>Entering the service that runs on port 5000 we find a website about a software called Dosky.</p>
+<p>A normal website about the service, and reading a little about it I found out what Dosky is: Dosky is a software that is based on server and client side in two separate programs, so you can manage the services that run on your server remotely and in a secure way..</p>
 <p>Okay, now that we see this let’s try to exploit something.</p>
 
-<p>First let’s enumerate the directories of the website. we will use gobuster.</p>
+<p>First let’s enumerate the directories of the website. We will use gobuster.</p>
 
 ```
 /admin (Status: 200)
@@ -60,11 +60,11 @@ PORT         STATE SERVICE VERSION
 /robots.txt (Status: 200)
 ```
 
-<p>Gobuste were able to find some interesting directories, one of them refers to a console that runs on Flesk applications under development and it is in debug mode, but we would have to have the pin to have access, so we wont lost our time with it.</p>
+<p>Gobuste was able to find some interesting directories, one of them refers to a console that runs on Flesk applications under development and it is in debug mode, but we would have to have the pin to have access, so we wont lost our time with it.</p>
 <p>"/download" can be accessed through the main page, this makes us download a program that is Dosky_Client, can be useful.</p>
-<p>The webpage shows us that there is an Bug Bounty program opened for the public tu thest their aplications. After entering the Bug Bounty page it seens to be under contruction, but has a email for contact.</p>
+<p>The webpage shows us that there is an Bug Bounty program opened for the public to test their aplications. After entering the Bug Bounty page it seens to be under contruction, but it has a email for contact.</p>
 
-`Email: hanny@dosky.com` It can be usefull.
+`Email: hanny@dosky.com` It can be usefull later.
 
 <h3 align="center">WebApp Exploitation</h3>
 
@@ -72,7 +72,7 @@ PORT         STATE SERVICE VERSION
 
 <p>This form allows only email to be inserted, which makes it difficult to explore, however we can bypass using a reverse proxy like <b>Burp Suite</b>.</p>
 
-<p>This way I was able to do some tests and finally find out that the application is vulnerable to <b>sql injection</b>, so even without knowing the password we can use that email that you had found on the Bug Bounty page to bypass the authentication.</p>
+<p>This way I was able to do some tests and finally find out that the application is vulnerable to <b>sql injection</b>, so even without knowing the password we can use the email that we had found on the Bug Bounty page to bypass the authentication.</p>
 
 ### SQL Injection Time
 <p>With the Burp Suite connected and intercepting all the traffic we should try to log in to the form with the following credentials:</p>
@@ -133,8 +133,8 @@ it's easier and everyone will be allowed to handle that user.
 
 ```
 
-<p>The shell we have is not so good so we can connect via ssh with the password we have now.</p>
-<p>In the dosky user home folder we have the dosky service, which was exploited to give us access to the machine, in this file pythos has the access passwords for the server as well as the username. Looking better you can find the flag.</p>
+<p>The shell we have is not so good so we can connect via ssh with the password we got now.</p>
+<p>In the dosky user home folder we have the dosky service, which was exploited to give us access to the machine, inside this python file it has the access passwords for the server as well as the username. Looking better the file you can find the flag.</p>
 
 ```
 
@@ -147,7 +147,7 @@ it's easier and everyone will be allowed to handle that user.
 
 <p>To obtain the first flag, we must connect to the server with Dosky_Client and login with the credentials.<br><br>The web application is found in a folder on the dosky home</p>
 
-<p>it has a database of type sqlite3 that has Hanny's credentials to enter her dashboad, a senha para acessar o usuário de hanny é a mesma.</p>
+<p>It has a database of type sqlite3 that has Hanny's credentials to enter her dashboad, her user in the machine uses the same password.</p>
 
 ```
 dosky@dosky:~/Web_Site_v2$ cat auth.db
