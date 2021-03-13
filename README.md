@@ -28,11 +28,11 @@ Open 10.10.159.174:10515
 <p>There are some services runing, using <b>Nmap</b> now we can receive more information about the ports we know that are oppened</p>
 
 ```
-PORT         STATE SERVICE VERSION
+PORT          STATE SERVICE VERSION
 22/tcp         open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
 80/tcp         open  http    Apache httpd 2.4.29 ((Ubuntu))
-5000/tcp     open  http    Werkzeug httpd 1.0.1 (Python 3.6.9)
-10515/tcp   open  unknown
+5000/tcp       open  http    Werkzeug httpd 1.0.1 (Python 3.6.9)
+10515/tcp      open  unknown
 
 ```
 <ur>
